@@ -1,4 +1,4 @@
-// Initialize Firebase
+// Initializing Firebase
 var config = {
     apiKey: "AIzaSyBYE3uixWCqzAX0IYNnbfBy-KRFiQ6Gbn0",
     authDomain: "trainactivity-e030e.firebaseapp.com",
@@ -9,7 +9,6 @@ var config = {
   };
   firebase.initializeApp(config);
   
-  
   // VARIABLES
   var database = firebase.database();
   
@@ -17,7 +16,6 @@ var config = {
   var destination = "";
   var firstTrainTime = "";
   var frequency = 0;
-  
   
   // FUNCTIONS + EVENTS
   $("#addTrain").on("click", function() {
@@ -38,11 +36,9 @@ var config = {
       firstTrainTime: firstTrainTime,
       frequency: frequency
     });
-  
-      return false;
+        return false;
   });
-  
-  
+    
   // MAIN PROCESS + INITIAL CODE
   database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val());
@@ -52,8 +48,7 @@ var config = {
     destination = snapshot.val().destination;
     firstTrainTime = snapshot.val().firstTrainTime;
     frequency = snapshot.val().frequency;
-  
-  
+    
     // moment.js methods for time calls and calculations. lines 57 to 65 were accomplished with Tenor's assistance. I didn't update the current time. It looks like "Minutes Away" may be larger than the frequency interval :(
     var firstTrainMoment = moment(firstTrainTime, 'HH:mm');
     var nowMoment = moment(); // creates a moment object of current date and time and storing it in a variable whenever the user click the submit button
@@ -64,7 +59,6 @@ var config = {
   
     var nextArrival = nowMoment.add(minutesAway, 'minutes');
     var formatNextArrival = nextArrival.format("HH:mm");
-  
   
     // add table
     var tr = $('<tr>');
@@ -81,10 +75,9 @@ var config = {
     tr.append(a).append(b).append(c).append(d).append(e);
     $('#newTrains').append(tr);
   
-  
     }, function (errorObject) {
   
-    // In case of error this will print the error
+    // Error(s) gets printed here, if any
       console.log("The read failed: " + errorObject.code);
   
   });
